@@ -1,9 +1,48 @@
-binary_search
-=============
+h1. Binary Search for Ruby's Arrays
 
-Description goes here.
+One incredibly handy algorithm that is missing from Ruby's Array class is the binary search.  If we *know* for *absolute certain* that the array we're working with is sorted you can use a binary search to search through the array much much more quickly than a linear search, which would be performed with index or detect/find.
 
-COPYRIGHT
-=========
+Need proof?  Howsabout some benchmarks:
 
-Copyright (c) 2008 Tyler McMullen. See LICENSE for details.
+<pre>
+Benchmark for 1000000 iterations searching through an array of 100 elements.
+                     user     system      total        real
+index:           6.310000   0.020000   6.330000 (  6.486561)
+binary_index:   10.030000   0.030000  10.060000 ( 10.328231)
+
+Benchmark for 100000 iterations searching through an array of 1000 elements.
+                     user     system      total        real
+index:           5.870000   0.020000   5.890000 (  6.043561)
+binary_index:    1.490000   0.010000   1.500000 (  1.532864)
+
+Benchmark for 10000 iterations searching through an array of 10000 elements.
+                     user     system      total        real
+index:           5.920000   0.020000   5.940000 (  6.088036)
+binary_index:    0.200000   0.000000   0.200000 (  0.209948)
+
+Benchmark for 1000 iterations searching through an array of 100000 elements.
+                     user     system      total        real
+index:           5.890000   0.020000   5.910000 (  6.063850)
+binary_index:    0.030000   0.000000   0.030000 (  0.025881)
+
+Benchmark for 100 iterations searching through an array of 1000000 elements.
+                     user     system      total        real
+index:           6.040000   0.020000   6.060000 (  6.228782)
+binary_index:    0.000000   0.000000   0.000000 (  0.003449)
+
+Benchmark for 10 iterations searching through an array of 10000000 elements.
+                     user     system      total        real
+index:           4.760000   0.010000   4.770000 (  4.910092)
+binary_index:    0.000000   0.000000   0.000000 (  0.000432)
+</pre>
+
+So, for arrays of about 100 elements, the additional overhead of using a binary search (in Ruby) is too much for it to overtake the C-coded 'index' method Ruby includes.  However, in each test above that 1000, 10,000, and so on... the binary search wins hands down.
+
+<pre>
+  <code>
+    x = [5,1,6,7,2,6,4,2,6,1,6,1,1,8,3,5,2].sort
+    puts x.binary_index(5)
+  </code>
+</pre>
+
+So the actual method is 'binary_index' as it does the same thing that 'index' does: returns the index of a matching element.  It should be noted that 'index' returns the *first* instance of a matching element.  'binary_index' is not guaranteed to return the first.  It should also be noted, again, that this will only work if the array is sorted correctly.  If it's not weird crap will happen.
