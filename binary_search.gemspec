@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.date = %q{2008-12-28}
   s.description = %q{Binary search and index methods for Ruby Arrays.}
   s.email = %q{tbmcmullen@gmail.com}
-  s.files = ["VERSION.yml", "lib/binary_search.rb", "test/binary_search_test.rb", "test/test_helper.rb"]
+  s.files = ["README.textile", "VERSION.yml", "lib/binary_search.rb", "test/binary_search_test.rb", "test/test_helper.rb"]
   s.homepage = %q{http://github.com/tyler/binary_search}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.2.0}
