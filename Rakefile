@@ -7,11 +7,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "binary_search"
-    s.summary = "TODO"
+    s.summary = "Binary search and index methods for Ruby Arrays."
     s.email = "tbmcmullen@gmail.com"
     s.homepage = "http://github.com/tyler/binary_search"
-    s.description = "TODO"
+    s.description = s.summary
     s.authors = ["Tyler McMullen"]
+    s.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec,examples}/**/*"]
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
