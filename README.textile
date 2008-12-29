@@ -2,6 +2,32 @@ h1. Binary Search for Ruby's Arrays
 
 One incredibly handy algorithm that is missing from Ruby's Array class is the binary search.  If we *know* for *absolute certain* that the array we're working with is sorted you can use a binary search to search through the array much much more quickly than a linear search, which would be performed with index or detect/find.
 
+h2. Usage
+
+There are two methods defined by this gem. binary_search and binary_index.  There are two versions of both of those methods.  You can use the native version by requiring 'binary_search/native' or use the pure Ruby version with 'binary_search/pure'.
+
+<pre>
+  <code>
+    require 'binary_search/native'
+
+    x = [5,1,6,7,2,6,4,2,6,1,6,1,1,8,3,5,2].sort
+    puts x.binary_index(5)
+    #=> 10
+
+    target = 4
+    y = [[1,:a], [2,:b], [3,:c], [4,:d]]
+    puts x.binary_search { |v| target <=> v }
+    #=> [4,:d]
+  </code>
+</pre>
+
+So the method 'binary_index' does the same thing that 'index' does: returns the index of a matching element.  It should be noted that 'index' returns the *first* instance of a matching element.  'binary_index' is not guaranteed to return the first.  It should also be noted, again, that this will only work if the array is sorted correctly.  If it's not weird crap will happen.
+
+'binary_search' is similar to 'find' or 'detect' from Ruby's normal arsenal.  The difference is that rather than the block needing to return a boolean, it needs to return the usual output from the '<=>' operator.  (1 for >, -1 for <, and 0 for ==).  This is obviously because we need to know whether the element being evaluated is greater than, less than, or equal to the value we're actually looking for.
+
+
+h2. Benchmarks
+
 Need proof?  Howsabout some benchmarks:
 
 <pre>
@@ -74,15 +100,3 @@ Native BI:    0.000000   0.000000   0.000000 (  0.001602)
 
 So, your array must be fairly large (between 100 and 1000 elements) for the Ruby version of binary_index to be faster than Ruby's builtin index method.  However, even for arrays as small as 5 elements, the native version of the binary_index method is faster than Ruby's index.  However, for very large sized Arrays, both the the pure and the native version are much much much faster than the builtin method.
 
-<pre>
-  <code>
-    require 'binary_search/native'
-
-    x = [5,1,6,7,2,6,4,2,6,1,6,1,1,8,3,5,2].sort
-    puts x.binary_index(5)
-  </code>
-</pre>
-
-So the actual method is 'binary_index' as it does the same thing that 'index' does: returns the index of a matching element.  It should be noted that 'index' returns the *first* instance of a matching element.  'binary_index' is not guaranteed to return the first.  It should also be noted, again, that this will only work if the array is sorted correctly.  If it's not weird crap will happen.
-
-Oh yeah, and don't bother trying to require 'binary_search', it'll just throw an error telling you to either require 'binary_search/pure' or 'binary_search/native'.  I'd always use native... but some people are weird.
