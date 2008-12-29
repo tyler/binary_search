@@ -1,15 +1,32 @@
 class Array
-  def binary_index(target,lower=0,upper=self.size-1)
-    return if lower > upper
-    idx = lower + (upper - lower) / 2
-    value = self[idx]
-    if value == target
-      return idx
-    elsif value > target
-      self.binary_index(target, lower, idx - 1)
-    elsif value < target
-      self.binary_index(target, idx + 1, upper)
+  def binary_index(target)
+    binary_chop { |v| target <=> v }
+  end
+
+  def binary_search(&block)
+    index = binary_chop(&block)
+    index ? self[index] : nil
+  end
+
+  private
+
+  def binary_chop(&block)
+    upper = self.size - 1
+    lower = 0
+
+    while(upper >= lower) do
+      idx = lower + (upper - lower) / 2
+      comp = yield self[idx]
+
+      if comp == 0
+        return idx
+      elsif comp > 0
+        lower = idx + 1
+      else
+        upper = idx - 1
+      end
     end
+    nil
   end
 end
 
