@@ -16,7 +16,7 @@ There are two methods defined by this gem. binary_search and binary_index.  Ther
 
     target = 4
     y = [[1,:a], [2,:b], [3,:c], [4,:d]]
-    puts x.binary_search { |v| target <=> v }
+    puts x.binary_search { |v| target <=> v[0] }
     #=> [4,:d]
   </code>
 </pre>
