@@ -12,7 +12,9 @@ begin
     s.homepage = "http://github.com/tyler/binary_search"
     s.description = s.summary
     s.authors = ["Tyler McMullen"]
-    s.files = FileList["[A-Z]*.*", "{bin,generators,lib,test,spec,examples}/**/*"]
+    s.files = FileList["[A-Z]*.*", "{ext,lib}/**/*"]
+    s.extensions = ['ext/extconf.rb']
+    s.require_paths << 'ext'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
