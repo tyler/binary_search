@@ -29,7 +29,7 @@ static VALUE rb_array_binary_index(VALUE self, VALUE value) {
   return Qnil;
 }
 
-void Init_binary_search() {
+void Init_binary_search_ext() {
   id_cmp = rb_intern("<=>");
   rb_define_method(rb_cArray, "binary_index", rb_array_binary_index, 1);
 }
