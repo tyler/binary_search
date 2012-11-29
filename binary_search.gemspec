@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description = %q{Binary search and index methods for Ruby Arrays.}
   s.email = %q{tbmcmullen@gmail.com}
   s.extensions = ["ext/extconf.rb"]
-  s.files = ["README.textile", "VERSION.yml", "ext/extconf.rb", "ext/binary_search.c", "lib/binary_search", "lib/binary_search/native.rb", "lib/binary_search/pure.rb", "lib/binary_search.rb"]
+  s.files = ["README.textile", "VERSION.yml", "ext/extconf.rb", "ext/binary_search.c", "lib/binary_search/native.rb", "lib/binary_search/pure.rb", "lib/binary_search.rb"]
   s.homepage = %q{http://github.com/tyler/binary_search}
   s.require_paths = ["lib", "ext"]
   s.rubygems_version = %q{1.2.0}
