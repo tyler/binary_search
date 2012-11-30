@@ -1,1 +1,1 @@
-require File.dirname(__FILE__) + '/../../ext/binary_search'
+require 'binary_search_ext'
