@@ -1,20 +1,18 @@
 class Array
   def binary_index(target)
-    binary_chop { |v| target <=> v }
+    binary_find_index { |v| target <=> v }
   end
 
   def binary_search(&block)
-    index = binary_chop(&block)
+    index = binary_find_index(&block)
     index ? self[index] : nil
   end
 
-  private
-
-  def binary_chop(&block)
+  def binary_find_index(&block)
     upper = self.size - 1
     lower = 0
 
-    while(upper >= lower) do
+    while upper >= lower
       idx = lower + (upper - lower) / 2
       comp = yield self[idx]
 
