@@ -1,10 +1,18 @@
 h1. Binary Search for Ruby's Arrays
 
-One incredibly handy algorithm that is missing from Ruby's Array class is the binary search.  If we *know* for *absolute certain* that the array we're working with is sorted you can use a binary search to search through the array much much more quickly than a linear search, which would be performed with index or detect/find.
+One incredibly handy algorithm that is missing from Ruby's Array class is
+the binary search.  If we *know* for *absolute certain* that the array
+we're working with is sorted you can use a binary search to search through
+the array much much more quickly than a linear search, which would be
+performed with index or detect/find.
 
 h2. Usage
 
-There are two methods defined by this gem. binary_search and binary_index.  There are two versions of both of those methods.  You can use the native version by requiring 'binary_search/native' or use the pure Ruby version with 'binary_search/pure'.
+There are three methods defined by this gem. binary_search, binary_index,
+and binary_index_approximate.
+There are two versions of each method.  You can use the native
+versions by requiring 'binary_search/native' or use the pure Ruby versions
+with 'binary_search/pure'.
 
 <pre>
   <code>
@@ -14,6 +22,9 @@ There are two methods defined by this gem. binary_search and binary_index.  Ther
     puts x.binary_index(5)
     #=> 10
 
+    puts x.binary_index { |x| 5 <=> x }
+    #=> 10
+
     target = 4
     y = [[1,:a], [2,:b], [3,:c], [4,:d]]
     puts y.binary_search { |v| target <=> v[0] }
@@ -21,9 +32,29 @@ There are two methods defined by this gem. binary_search and binary_index.  Ther
   </code>
 </pre>
 
-So the method 'binary_index' does the same thing that 'index' does: returns the index of a matching element.  It should be noted that 'index' returns the *first* instance of a matching element.  'binary_index' is not guaranteed to return the first.  It should also be noted, again, that this will only work if the array is sorted correctly.  If it's not weird crap will happen.
+The method 'binary_index' does the same thing that 'index' does: returns
+the index of a matching element.
+It should be noted that 'index' returns the *first* instance of a matching
+element.  'binary_index' is not guaranteed to return the first.
+It should also be noted, again, that this will only work if the array is
+sorted correctly.  If it's not weird crap will happen.
 
-'binary_search' is similar to 'find' or 'detect' from Ruby's normal arsenal.  The difference is that rather than the block needing to return a boolean, it needs to return the usual output from the '<=>' operator.  (1 for >, -1 for <, and 0 for ==).  This is obviously because we need to know whether the element being evaluated is greater than, less than, or equal to the value we're actually looking for.
+'binary_index_approximate' returns the index which is less than or equal
+to the target value.  It returns -1 if the first element is larger than
+the target value.
+
+Both 'binary_index' and 'binary_index_approximate' can take a single argument,
+which is used to compare using the <=> operator, or it may
+be provided with a block.  If a block is provided, it is passed a single
+value, which should be compared to the target, returning the usual output
+from the <=> operator.
+
+'binary_search' is similar to 'find' or 'detect' from Ruby's normal arsenal.
+The difference is that rather than the block needing to return a boolean,
+it needs to return the usual output from the '<=>' operator.
+(1 for >, -1 for <, and 0 for ==).  This is obviously because we need to
+know whether the element being evaluated is greater than, less than,
+or equal to the value we're actually looking for.
 
 
 h2. Benchmarks

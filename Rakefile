@@ -1,7 +1,13 @@
+require 'rubygems'
+require 'bundler'
+begin
+  Bundler.setup(:default, :development)
+rescue Bundler::BundlerError => e
+  $stderr.puts e.message
+  $stderr.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
 require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
-require 'rcov/rcovtask'
 
 begin
   require 'jeweler'
@@ -11,33 +17,37 @@ begin
     s.email = "tbmcmullen@gmail.com"
     s.homepage = "http://github.com/tyler/binary_search"
     s.description = s.summary
-    s.authors = ["Tyler McMullen"]
-    s.files = FileList["[A-Z]*.*", "{ext,lib}/**/*"]
-    s.extensions = ['ext/extconf.rb']
+    s.authors = ["Tyler McMullen", "Michael Graff"]
+    s.files = Dir.glob("{ext,lib}/**/*.{c,rb}")
+    s.extensions = ['ext/binary_search_ext/extconf.rb']
     s.require_paths << 'ext'
   end
+  Jeweler::RubygemsDotOrgTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
-Rake::TestTask.new do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
+require 'rake/extensiontask'
+Rake::ExtensionTask.new('binary_search_ext')
+
+require 'rake/testtask'
+Rake::TestTask.new(:test_native) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/test_native*.rb'
+  test.verbose = true
 end
 
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'binary_search'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+Rake::TestTask.new(:test_pure) do |test|
+  test.libs << 'lib' << 'test'
+  test.pattern = 'test/**/test_pure*.rb'
+  test.verbose = true
 end
 
-Rcov::RcovTask.new do |t|
-  t.libs << 'test'
-  t.test_files = FileList['test/**/*_test.rb']
-  t.verbose = true
-end
+task :test => :test_native
+task :test_native => :compile
+task :test => :test_pure
 
-task :default => :rcov
+require 'yard'
+YARD::Rake::YardocTask.new
+
+task :default => :test

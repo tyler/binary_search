@@ -5,3 +5,8 @@ ext/Makefile
 ext/*.bundle
 ext/*.so
 ext/*.o
+Gemfile.lock
+pkg
+tmp
+.yardoc
+doc
