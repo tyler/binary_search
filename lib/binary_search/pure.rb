@@ -7,6 +7,10 @@ class Array
     index = binary_chop(&block)
     index ? self[index] : nil
   end
+  
+  def binary_search_index(&block)
+    binary_chop(&block)
+  end
 
   private
 
