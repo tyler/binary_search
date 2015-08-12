@@ -19,7 +19,7 @@ class Array
     lower = 0
 
     while(upper >= lower) do
-      idx = lower + (upper - lower) / 2
+      idx = lower + ((upper - lower) / 2)
       comp = yield self[idx]
 
       if comp == 0
